@@ -21,7 +21,7 @@ class Product extends Component {
     items: {},
     variants: {},
     img: "",
-    message: "Please choose product options",
+    errorMessage: "Please choose product options",
     isError: false,
   };
 
@@ -113,7 +113,7 @@ class Product extends Component {
                 {currentCurr} {currencyConverter(product.prices, currentCurr)}
               </h3>
               <ErrorMessage>
-                {this.state.isError && this.state.message}
+                {this.state.isError && this.state.errorMessage}
               </ErrorMessage>
               <Button
                 inStock={product.inStock}
