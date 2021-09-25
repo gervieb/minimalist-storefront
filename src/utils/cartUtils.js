@@ -12,21 +12,39 @@ export const addToCart = (cart, item) => {
     : [...cart, { ...item }];
 };
 
-export const handleQuantity = (cartItems, id, action) => {
+export const handleDecrease = (cartItems, id, prodId) => {
+  const quantity = cartItems
+    .find((list) => list.productId === prodId)
+    .items.find((item) => item.varId === id).qty;
+
+  if (quantity === 1)
+    return cartItems.filter((list) => list.productId !== prodId);
+
   return cartItems.map((list) => {
     return {
       ...list,
       items: list.items.map((item) =>
         item.varId === id
-          ? action === "increase"
-            ? {
-                ...item,
-                qty: item.qty + 1,
-              }
-            : {
-                ...item,
-                qty: item.qty > 1 ? item.qty - 1 : item.qty,
-              }
+          ? {
+              ...item,
+              qty: item.qty - 1,
+            }
+          : item
+      ),
+    };
+  });
+};
+
+export const handleIncrease = (cartItems, id, prodId) => {
+  return cartItems.map((list) => {
+    return {
+      ...list,
+      items: list.items.map((item) =>
+        item.varId === id
+          ? {
+              ...item,
+              qty: item.qty + 1,
+            }
           : item
       ),
     };

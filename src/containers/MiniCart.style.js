@@ -24,15 +24,6 @@ const overlayCart = css`
   color: black;
 `;
 
-const itemCount = css`
-  color: #444444;
-  font-size: medium;
-`;
-
-const emptyCount = css`
-  color: #fff;
-`;
-
 export const Button = styled.button`
   font-size: large;
   padding: 10px 25px;

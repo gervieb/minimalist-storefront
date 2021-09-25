@@ -1,6 +1,5 @@
 export const ADD_TO_CART = "ADD_TO_CART";
-export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
-export const CLEAR_CART = "CLEAR_CART";
+export const REMOVE_ZERO_QTY = "REMOVE_ZERO_QTY";
 export const INCREASE_QTY = "INCREASE_QTY";
 export const DECREASE_QTY = "DECREASE_QTY";
 export const CHANGE_SELECTED = "CHANGE_SELECTED";
@@ -12,24 +11,29 @@ export const addToCart = (item) => {
   };
 };
 
-export const removeFromCart = (id) => {
+export const removeZeroQty = () => {
   return {
-    type: REMOVE_FROM_CART,
-    payload: id,
+    type: REMOVE_ZERO_QTY,
   };
 };
 
-export const increaseQty = (id) => {
+export const increaseQty = (id, prodId) => {
   return {
     type: INCREASE_QTY,
-    payload: id,
+    payload: {
+      id: id,
+      prodId: prodId,
+    },
   };
 };
 
-export const decreaseQty = (id) => {
+export const decreaseQty = (id, prodId) => {
   return {
     type: DECREASE_QTY,
-    payload: id,
+    payload: {
+      id: id,
+      prodId: prodId,
+    },
   };
 };
 

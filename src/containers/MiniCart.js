@@ -89,8 +89,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   display: (bool) => dispatch(displayCart(bool)),
-  increase: (id) => dispatch(increaseQty(id)),
-  decrease: (id) => dispatch(decreaseQty(id)),
+  increase: (id, prodId) => dispatch(increaseQty(id, prodId)),
+  decrease: (id, prodId) => dispatch(decreaseQty(id, prodId)),
 });
 
 export default connect(

@@ -32,6 +32,7 @@ class App extends Component {
   };
 
   render() {
+    console.log("cartList", this.props.cartList);
     return (
       <div className="App">
         <Router>
@@ -47,10 +48,14 @@ class App extends Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  cartList: state.cart.cartList,
+});
+
 const mapDispatchToProps = (dispatch) => ({
   fetchPending: () => dispatch(fetchDataPending()),
   fetchSuccess: (data) => dispatch(fetchDataSuccess(data)),
   fetchError: (error) => dispatch(fetchDataError(error)),
 });
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

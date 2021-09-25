@@ -1,13 +1,15 @@
 import {
   ADD_TO_CART,
-  REMOVE_FROM_CART,
-  CLEAR_CART,
   INCREASE_QTY,
   DECREASE_QTY,
   CHANGE_SELECTED,
 } from "../actions/cartAction";
 
-import { addToCart, handleQuantity } from "../../utils/cartUtils";
+import {
+  addToCart,
+  handleIncrease,
+  handleDecrease,
+} from "../../utils/cartUtils";
 
 const initialState = {
   cartList: [],
@@ -22,20 +24,13 @@ const cartReducer = (state = initialState, action) => {
       };
     }
 
-    case REMOVE_FROM_CART: {
-      return {
-        ...state,
-        cartList: state.cartList.filter((item) => item.id !== action.payload),
-      };
-    }
-
     case INCREASE_QTY: {
       return {
         ...state,
-        cartList: handleQuantity(
+        cartList: handleIncrease(
           [...state.cartList],
-          action.payload,
-          "increase"
+          action.payload.id,
+          action.payload.prodId
         ),
       };
     }
@@ -43,10 +38,10 @@ const cartReducer = (state = initialState, action) => {
     case DECREASE_QTY: {
       return {
         ...state,
-        cartList: handleQuantity(
+        cartList: handleDecrease(
           [...state.cartList],
-          action.payload,
-          "decrease"
+          action.payload.id,
+          action.payload.prodId
         ),
       };
     }

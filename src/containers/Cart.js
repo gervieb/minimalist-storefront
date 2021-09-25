@@ -16,25 +16,23 @@ class Cart extends Component {
 
     return (
       <CartContainer>
-        <h1 className="cart-label">Cart</h1>
+        <h1 className="cart-label">CART</h1>
         {cartList.length === 0 ? (
           <EmptyText>You cart is empty!</EmptyText>
         ) : (
-          <>
-            {cartList &&
-              cartList.map((list) =>
-                list.items.map((item) => (
-                  <CartItems
-                    item={item}
-                    key={item.varId}
-                    changeOption={changeOption}
-                    increase={increase}
-                    decrease={decrease}
-                    currentCurr={currentCurr}
-                  />
-                ))
-              )}
-          </>
+          cartList.map((list) =>
+            list.items.map((item) => (
+              <CartItems
+                key={item.varId}
+                item={item}
+                list={list}
+                changeOption={changeOption}
+                increase={increase}
+                decrease={decrease}
+                currentCurr={currentCurr}
+              />
+            ))
+          )
         )}
       </CartContainer>
     );
@@ -47,8 +45,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  increase: (id) => dispatch(increaseQty(id)),
-  decrease: (id) => dispatch(decreaseQty(id)),
+  increase: (id, prodId) => dispatch(increaseQty(id, prodId)),
+  decrease: (id, prodId) => dispatch(decreaseQty(id, prodId)),
   changeOption: (name, value, id) => dispatch(changeSelected(name, value, id)),
 });
 
