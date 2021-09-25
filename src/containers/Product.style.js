@@ -133,13 +133,19 @@ export const Title = styled.div`
   }
 `;
 
-export const Label = styled.h3`
+export const Label = styled.h4`
   font-weight: 600;
   margin-bottom: 0;
+  font-family: sans-serif;
+  padding-bottom: 4px;
 
   .amount {
     margin-top: 3px;
   }
+`;
+
+export const ErrorMessage = styled.h5`
+  color: red;
 `;
 
 export const Button = styled.button`

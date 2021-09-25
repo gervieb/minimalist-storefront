@@ -13,6 +13,7 @@ import {
   Label,
   Button,
   Container,
+  ErrorMessage,
 } from "./Product.style";
 
 class Product extends Component {
@@ -20,6 +21,8 @@ class Product extends Component {
     items: {},
     variants: {},
     img: "",
+    message: "Please choose product options",
+    isError: false,
   };
 
   componentDidMount = () => {
@@ -38,8 +41,32 @@ class Product extends Component {
     });
   };
 
+  verifyAttributes = (prices, product, category) => {
+    const { variants } = this.state;
+    const { cartList, currentCurr, addItemToCart, increase, data } = this.props;
+    const arrKeys = Object.keys(variants);
+
+    const res = data.categories
+      .find((categories) => categories.name === category)
+      .products.find((prod) => prod.id === product.id)
+      .attributes.map((attri) => attri.name);
+
+    if (arrKeys.length !== res.length) return this.setState({ isError: true });
+
+    handleAddToCart(
+      prices,
+      product,
+      variants,
+      cartList,
+      currentCurr,
+      addItemToCart,
+      increase
+    );
+    this.setState({ isError: false });
+  };
+
   render() {
-    const { currentCurr, cartList, increase, addItemToCart } = this.props;
+    const { currentCurr } = this.props;
     const product = Object.assign({}, this.props.location.state);
 
     return (
@@ -85,19 +112,18 @@ class Product extends Component {
               <h3 className="amount">
                 {currentCurr} {currencyConverter(product.prices, currentCurr)}
               </h3>
+              <ErrorMessage>
+                {this.state.isError && this.state.message}
+              </ErrorMessage>
               <Button
                 inStock={product.inStock}
                 onClick={
                   product.inStock
                     ? () =>
-                        handleAddToCart(
+                        this.verifyAttributes(
                           product.prices,
                           product,
-                          this.state.variants,
-                          cartList,
-                          currentCurr,
-                          addItemToCart,
-                          increase
+                          product.category
                         )
                     : null
                 }
@@ -114,6 +140,7 @@ class Product extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  data: state.dataList.data,
   currentCurr: state.currencyList.currency,
   cartList: state.cart.cartList,
 });
