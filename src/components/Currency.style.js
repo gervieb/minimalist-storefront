@@ -15,6 +15,7 @@ const currencyOption = css`
 `;
 
 export const CurrencyOptions = styled.ul`
+  z-index: 20;
   ${({ isCurrencyDisplay }) => (isCurrencyDisplay ? currencyOption : hidden)}
 `;
 

@@ -1,17 +1,5 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
-
-export const CategoryName = styled.h1`
-  text-transform: capitalize;
-  font-size: 46px;
-  padding-top: 30px;
-  font-weight: normal;
-`;
-
-export const Container = styled.div`
-  width: 100%;
-  padding-bottom: 60px;
-`;
 
 export const Image = styled.img`
   display: block;
@@ -19,6 +7,13 @@ export const Image = styled.img`
   height: 460px;
   object-fit: cover;
   opacity: ${(props) => (!props.inStock ? 0.5 : null)};
+`;
+
+export const CategoryName = styled.h1`
+  text-transform: capitalize;
+  font-size: 46px;
+  padding-top: 30px;
+  font-weight: normal;
 `;
 
 export const WhiteCartWrapper = styled.div`
@@ -39,14 +34,27 @@ export const ProductListWrapper = styled.div`
   padding-top: 40px;
   align-items: center;
   justify-content: center;
+`;
+
+export const Container = styled.div`
+  width: 100%;
+  padding-bottom: 60px;
 
   @media only screen and (max-width: 1250px) {
-    grid-gap: 40px;
+    ${ProductListWrapper} {
+      grid-gap: 40px;
+    }
   }
 
-  @media only screen and (max-width: 700px) {
-    grid-template-columns: repeat(auto-fill, minmax(max-content, 300px));
-    grid-gap: 40px;
+  @media only screen and (max-width: 750px) {
+    ${ProductListWrapper} {
+      grid-template-columns: repeat(auto-fill, minmax(max-content, 300px));
+      grid-gap: 40px;
+    }
+
+    ${CategoryName} {
+      font-size: 28px;
+    }
 
     ${Image} {
       width: 300px;
@@ -55,6 +63,26 @@ export const ProductListWrapper = styled.div`
 
     &:hover ${WhiteCartWrapper} {
       margin-right: 30px;
+    }
+  }
+
+  @media only screen and (max-width: 480px) {
+    ${ProductListWrapper} {
+      grid-template-columns: repeat(auto-fill, minmax(max-content, 220px));
+      padding-top: 40px;
+    }
+
+    ${ProductListWrapper} {
+      padding: 0;
+    }
+
+    ${Image} {
+      width: 220px;
+      height: 220px;
+    }
+
+    ${CategoryName} {
+      padding-top: 20px;
     }
   }
 `;
@@ -136,5 +164,14 @@ export const ProductPrice = styled.h4`
 `;
 
 export const ProductLabel = styled.div`
-  opacity: ${(props) => (!props.inStock ? 0.5 : null)};
+  ${(props) =>
+    !props.inStock
+      ? css`
+          opacity: 0.5;
+
+          ${ProductName} {
+            margin-top: 10px;
+          }
+        `
+      : null};
 `;

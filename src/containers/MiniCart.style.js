@@ -43,8 +43,7 @@ export const CartOverlayContainer = styled.div`
   ${({ cartLength }) => (cartLength === 0 ? emptyCart : overlayCart)}
   ${({ isDisplayed }) => (isDisplayed ? showCart : hiddenCart)}
 
-
-  @media only screen and (max-width: 700px) {
+  @media only screen and (max-width: 750px) {
     width: 300px;
 
     ${Button} {
@@ -56,11 +55,13 @@ export const CartOverlayContainer = styled.div`
 export const Header = styled.h3`
   font-weight: bolder;
   text-align: left;
+  padding-left: 5px;
 `;
 
 export const TotalWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  padding: 0 5px;
 
   p {
     font-weight: bolder;
@@ -70,6 +71,7 @@ export const TotalWrapper = styled.div`
 export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  padding: 5px;
 
   .view-bag-btn {
     background-color: #fff;

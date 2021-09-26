@@ -9,6 +9,11 @@ export const CartContainer = styled.div`
     font-size: 32px;
     font-family: sans-serif;
   }
+
+  @media only screen and (max-width: 700px) {
+    margin: auto;
+    width: 90%;
+  }
 `;
 
 export const EmptyText = styled.p`

@@ -1,12 +1,16 @@
 import React, { Component } from "react";
 import { optionSelected } from "../utils/productUtils";
-import { SelectedText, SelectedColor } from "./CartAttributes.style";
+import {
+  SelectedText,
+  SelectedColor,
+  CartAttributesWrapper,
+} from "./CartAttributes.style";
 
 class CartAttributes extends Component {
   render() {
     const { el, item, changeOption, attri } = this.props;
     return (
-      <span>
+      <CartAttributesWrapper>
         {attri.type !== "swatch" ? (
           <SelectedText
             isSelected={optionSelected(item.variants, el.value, attri.name)}
@@ -21,7 +25,7 @@ class CartAttributes extends Component {
             onClick={() => changeOption(attri.name, el.value, item.varId)}
           ></SelectedColor>
         )}
-      </span>
+      </CartAttributesWrapper>
     );
   }
 }

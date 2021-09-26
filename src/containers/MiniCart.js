@@ -46,7 +46,7 @@ class MiniCart extends Component {
           </span>
         </Header>
         {cartLength !== 0 && (
-          <>
+          <div className="miniCartItemWrapper">
             {cartList.map((list) => (
               <MiniCartItems
                 key={list.productId}
@@ -74,7 +74,7 @@ class MiniCart extends Component {
               </Button>
               <Button className="checkout-btn">CHECKOUT</Button>
             </ButtonWrapper>
-          </>
+          </div>
         )}
       </CartOverlayContainer>
     );

@@ -31,3 +31,17 @@ export const SelectedColor = styled.p`
   width: 36px;
   height: 32px;
 `;
+
+export const CartAttributesWrapper = styled.span`
+  @media only screen and (max-width: 750px) {
+    ${SelectedText} {
+      padding: 6px 12px;
+      font-size: 14px;
+    }
+
+    ${SelectedColor} {
+      height: 26px;
+      width: 24px;
+    }
+  }
+`;

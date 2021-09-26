@@ -7,6 +7,19 @@ const button = css`
   color: #fff;
 `;
 
+export const CartProductLeft = styled.div`
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  margin-top: 20px .item-amount {
+    color: #444444;
+    font-size: medium;
+  }
+`;
+
 export const CartItemWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -14,18 +27,6 @@ export const CartItemWrapper = styled.div`
   border-top: 1px solid #dddddd;
   padding: 10px 0;
   align-items: center;
-`;
-
-export const CartProductLeft = styled.div`
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  margin-bottom: 20px;
-  margin-top: 20px .item-amount {
-    color: #444444;
-    font-size: medium;
-  }
 `;
 
 export const Title = styled.div`
@@ -54,6 +55,7 @@ export const Options = styled.div`
 
 export const CartProductRight = styled.div`
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: 20px;
@@ -62,6 +64,7 @@ export const CartProductRight = styled.div`
 
 export const QuantityWrapper = styled.div`
   display: flex;
+  flex-wrap: wrap;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
