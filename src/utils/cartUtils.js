@@ -18,7 +18,12 @@ export const handleDecrease = (cartItems, id, prodId) => {
     .items.find((item) => item.varId === id).qty;
 
   if (quantity === 1)
-    return cartItems.filter((list) => list.productId !== prodId);
+    return cartItems.map((list) => {
+      return {
+        ...list,
+        items: list.items.filter((item) => item.varId !== id),
+      };
+    });
 
   return cartItems.map((list) => {
     return {
