@@ -13,7 +13,8 @@ import {
 
 export default class MiniCartItems extends Component {
   render() {
-    const { list, increase, decrease, currentCurr } = this.props;
+    const { list, increase, decrease, currentCurr, getSymbolFromCurrency } =
+      this.props;
     return (
       <SingleProdWrapper>
         {list.items.map(
@@ -26,20 +27,18 @@ export default class MiniCartItems extends Component {
                     <p className="prod-title">{item.product.name}</p>
                   </div>
                   <Amount>
-                    {currentCurr}{" "}
-                    {Number(
-                      currencyConverter(item.product.prices, currentCurr) *
-                        item.qty
-                    ).toFixed(2)}
+                    {getSymbolFromCurrency(currentCurr)}
+                    {currencyConverter(item.product.prices, currentCurr)}
                   </Amount>
                   <AttributeWrapper>
                     {Object.entries(item.variants).map(([key, value], idx) => (
                       <React.Fragment key={idx}>
+                        <h4 className="attri-name">{key}</h4>
                         {!checkAttributeType(item.product.attributes, key) ? (
-                          <p className="item-value">{value}</p>
+                          <p className="attri-value ">{value}</p>
                         ) : (
                           <p
-                            className="color item-value"
+                            className="color attri-value"
                             style={{ backgroundColor: value }}
                           ></p>
                         )}
