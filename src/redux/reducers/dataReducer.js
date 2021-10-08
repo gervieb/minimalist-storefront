@@ -23,7 +23,6 @@ const categoriesReducer = (state = initialState, action) => {
         ...state,
         pending: false,
         data: action.payload,
-        currency: action.payload.currencies[0],
       };
     }
 
