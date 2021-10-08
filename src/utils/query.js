@@ -2,10 +2,23 @@ import { gql } from "graphql-request";
 
 export const endpoint = "http://localhost:4000/";
 
-export const queryData = gql`
-  {
+export const queryCategories = gql`
+  query Query {
     categories {
       name
+    }
+  }
+`;
+
+export const queryCurrencies = gql`
+  query Query {
+    currencies
+  }
+`;
+
+export const queryAllProducts = gql`
+  query Query {
+    categories {
       products {
         id
         name
@@ -13,28 +26,27 @@ export const queryData = gql`
         gallery
         description
         category
-        brand
-        prices {
-          currency
-          amount
-        }
         attributes {
           name
-          id
           type
+          id
           items {
             displayValue
             value
             id
           }
         }
+        prices {
+          currency
+          amount
+        }
+        brand
       }
     }
-    currencies
   }
 `;
 
-export const queryCategory = gql`
+export const quertProductByCategory = gql`
   query Query($categoryInput: CategoryInput) {
     category(input: $categoryInput) {
       products {
@@ -60,6 +72,34 @@ export const queryCategory = gql`
         }
         brand
       }
+    }
+  }
+`;
+
+export const queryProductDetails = gql`
+  query Query($productId: String!) {
+    product(id: $productId) {
+      id
+      name
+      inStock
+      gallery
+      description
+      category
+      attributes {
+        id
+        name
+        type
+        items {
+          displayValue
+          value
+          id
+        }
+      }
+      prices {
+        currency
+        amount
+      }
+      brand
     }
   }
 `;
