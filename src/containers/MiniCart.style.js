@@ -26,7 +26,7 @@ const overlayCart = css`
 
 export const Button = styled.button`
   font-size: large;
-  padding: 10px 25px;
+  padding: 10px 24px;
   margin-bottom: 20px;
   margin-top: 20px;
   -webkit-transition-duration: 0.4s; /* Safari */
@@ -41,13 +41,24 @@ export const Button = styled.button`
 
 export const CartOverlayContainer = styled.div`
   ${({ cartLength }) => (cartLength === 0 ? emptyCart : overlayCart)}
-  ${({ isDisplayed }) => (isDisplayed ? showCart : hiddenCart)}
+  ${({ isCartDisplayed }) => (isCartDisplayed ? showCart : hiddenCart)}
+  overflow-y: auto;
+  max-height: 700px;
+  max-height: 70vh;
+
+  @media only screen and (max-width: 1000px) {
+    ${Button} {
+      padding: 8px 20px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+  }
 
   @media only screen and (max-width: 750px) {
-    width: 300px;
+    width: 310px;
 
     ${Button} {
-      padding: 6px 18px;
+      padding: 6px 14px;
     }
   }
 `;

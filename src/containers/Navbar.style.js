@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { NavLink } from "react-router-dom";
 
 const overlay = css`
   position: fixed;
@@ -25,6 +26,55 @@ const arrow = css`
   margin-bottom: 2px;
 `;
 
+export const CategoryName = styled.p`
+  margin: 14px;
+  letter-spacing: 0.8px;
+  font-size: 19px;
+
+  &:hover,
+  &:active {
+    color: #3cc16e;
+  }
+`;
+
+export const StyledNavLink = styled(NavLink)`
+  &.${(props) => props.activeClassName} {
+    color: #3cc16e;
+    font-weight: 600;
+    border-bottom: 2px solid #3cc16e;
+    transition: border-bottom 0.3s ease-in-out;
+  }
+`;
+
+export const LeftNavLink = styled.div`
+  display: block;
+`;
+
+export const NavMenuWrapper = styled.div`
+  display: flex;
+
+  a {
+    text-decoration: none;
+    color: #000;
+  }
+
+  .close-icon {
+    display: none;
+  }
+
+  ${CategoryName} {
+    margin: 12px;
+  }
+`;
+
+export const LeftNav = styled.div`
+  .menu-icon {
+    display: none;
+    width: 26px;
+    height: 26px;
+  }
+`;
+
 export const RightNav = styled.div`
   position: relative;
   display: flex;
@@ -32,10 +82,9 @@ export const RightNav = styled.div`
 
 export const MainCurrency = styled.span`
   margin-right: 20px;
-  padding-top: 4px;
   cursor: pointer;
   font-weight: 600;
-  font-size: 18px;
+  font-size: 20px;
 `;
 
 export const ArrowUp = styled.i`
@@ -82,14 +131,49 @@ export const NavbarContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  background-color: white;
+  z-index: 50;
+  margin-top: 0;
+
+  @media only screen and (max-width: 480px) {
+    ${LeftNav} {
+      .menu-icon {
+        display: block;
+        cursor: pointer;
+      }
+    }
+
+    ${LeftNavLink} {
+      display: none;
+    }
+
+    ${NavMenuWrapper} {
+      flex-direction: column;
+      align-items: center;
+
+      a {
+        margin-bottom: 10px;
+      }
+
+      ${StyledNavLink} {
+        margin-bottom: 10px;
+      }
+    }
+  }
 `;
 
 export const ShoppingBagIcon = styled.img`
   height: 25px;
   width: 30px;
+  cursor: pointer;
 `;
 
 export const Overlay = styled.div`
-  ${({ isDisplayed, cartLength }) =>
-    isDisplayed && cartLength !== 0 ? overlay : hidden}
+  ${({ isCartDisplayed, cartLength }) =>
+    isCartDisplayed && cartLength !== 0 ? overlay : hidden}
 `;

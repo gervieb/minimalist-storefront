@@ -8,9 +8,10 @@ const selectedText = css`
 const cartItemValue = css`
   margin-right: 10px;
   border: 1px solid #000;
-  padding: 8px 16px;
+  padding: 8px 14px;
   margin-bottom: 0;
   cursor: pointer;
+  margin-top: 5px;
 `;
 
 const selectedColor = css`

@@ -12,7 +12,7 @@ const selectedColor = css`
 const cartItemValue = css`
   margin-right: 10px;
   border: 1px solid #000;
-  padding: 12px 24px;
+  padding: 8px 14px;
 `;
 
 export const ProductOptions = styled.div`
@@ -33,6 +33,7 @@ export const SelectedColor = styled.p`
   background-color: ${({ value }) => value};
   width: 36px;
   height: 32px;
+  margin-top: 0;
 `;
 
 export const AttributeWrapper = styled.div`

@@ -19,15 +19,12 @@ const outOfStock = `
 background-color: #dddddd;
 `;
 
-export const Container = styled.div`
-  width: 100%;
-`;
-
 export const MainImage = styled.img`
   display: block;
   width: 100%;
   min-width: 380px;
-  height: 700px;
+  height: 500px;
+
   object-fit: contain;
   padding-right: 40;
 `;
@@ -35,28 +32,29 @@ export const MainImage = styled.img`
 export const GalleryWrapper = styled.div`
   display: flex;
   flex-direction: row;
-
-  .right-img {
-    align-items: center;
-  }
 `;
 
 export const LeftImgWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-right: 40px;
+  cursor: pointer;
 
   img {
-    width: 120px;
-    height: 120px;
+    width: 90px;
+    height: 90px;
     object-fit: cover;
     margin: 5px;
   }
 `;
 
+export const RightImgWrapper = styled.div`
+  align-items: center;
+`;
+
 export const ProductDetailsWrapper = styled.div`
   .product-details {
-    width: 50%;
+    width: 55%;
     margin-left: 40px;
   }
 `;
@@ -80,7 +78,7 @@ export const Title = styled.div`
 export const ProductContainer = styled.div`
   width: 100%;
   display: grid;
-  grid-template-columns: 60% 40%;
+  grid-template-columns: repeat(2, 1fr);
   margin-top: 5%;
   margin-bottom: 5%;
   grid-gap: 1em;
@@ -88,8 +86,21 @@ export const ProductContainer = styled.div`
   @media only screen and (max-width: 1250px) {
     grid-template-columns: 100%;
     justify-content: center;
+
     .product-details {
       margin-top: 40px;
+    }
+
+    ${LeftImgWrapper} {
+      img {
+        width: 80px;
+        height: 80px;
+      }
+    }
+
+    ${MainImage} {
+      height: 450px;
+      min-width: auto;
     }
 
     ${GalleryWrapper} {
@@ -108,19 +119,15 @@ export const ProductContainer = styled.div`
 
   @media only screen and (max-width: 750px) {
     ${MainImage} {
-      height: 400px;
+      height: 300px;
       margin-bottom: 20px;
     }
 
     ${LeftImgWrapper} {
       margin: auto;
       flex-direction: row;
-
-      img {
-        width: 80px;
-        height: 80px;
-      }
     }
+
     ${ProductDetailsWrapper} {
       .product-details {
         width: 90%;
@@ -165,6 +172,10 @@ export const Label = styled.h4`
 
 export const ErrorMessage = styled.h5`
   color: red;
+`;
+
+export const SuccessMessage = styled.h5`
+  color: green;
 `;
 
 export const Button = styled.button`

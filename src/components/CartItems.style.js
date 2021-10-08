@@ -14,9 +14,12 @@ export const CartProductLeft = styled.div`
   justify-content: space-between;
   margin-right: 20px;
   margin-bottom: 20px;
-  margin-top: 20px .item-amount {
+  margin-top: 20px;
+
+  .item-amount {
     color: #444444;
     font-size: medium;
+    margin-bottom: 0;
   }
 `;
 
@@ -49,8 +52,15 @@ export const AttributesWrapper = styled.div`
 
 export const Options = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+  flex-direction: column;
+
+  p {
+    textalign: left;
+  }
+`;
+
+export const CartAtrributesWrapper = styled.div`
+  display: flex;
 `;
 
 export const CartProductRight = styled.div`
@@ -105,4 +115,9 @@ export const Image = styled.img`
   width: 200px;
   height: 200px;
   object-fit: cover;
+`;
+
+export const Label = styled.label`
+  font-weight: 900;
+  margin-top: 20px;
 `;

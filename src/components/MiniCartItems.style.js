@@ -21,6 +21,7 @@ export const CartLeft = styled.div`
     padding: 0;
     font-size: 17px;
     color: #423f3e;
+    width: 95%;
   }
 `;
 
@@ -41,19 +42,26 @@ export const CartRight = styled.div`
 
 export const AttributeWrapper = styled.div`
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
 
   .color {
     width: 24px;
     height: 22px;
   }
 
-  .item-value {
-    margin-bottom: 0;
-    margin-top: 0;
+  .attri-name {
+    color: #444444;
+    margin: 0;
+  }
+
+  .attri-name:not(:first-child) {
+    padding-top: 8px;
+  }
+
+  .attri-value {
+    margin: 0;
     border: 1px solid #000;
-    margin-right: 5px;
     padding: 1px 6px;
     font-size: small;
   }
