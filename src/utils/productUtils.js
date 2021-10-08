@@ -36,19 +36,14 @@ export const checkIfUnique = (selected, cart, id) => {
 };
 
 export const handleAddToCart = (
-  prices,
   prod,
   vart,
   cartList,
-  currentCurr,
   addItemToCart,
   increase
 ) => {
-  const price = prices.find(
-    (price) => price && price.currency === currentCurr && price
-  );
-
   let defaultVart = {};
+
   if (!vart) {
     defaultVart = defaultOption(prod);
   }
@@ -57,7 +52,6 @@ export const handleAddToCart = (
   result
     ? increase(result.varId)
     : addItemToCart({
-        price: price,
         productId: prod.id,
         items: [
           {
