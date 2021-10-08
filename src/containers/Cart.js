@@ -41,7 +41,7 @@ class Cart extends Component {
 
 const mapStateToProps = (state) => ({
   cartList: state.cart.cartList,
-  currentCurr: state.currencyList.currency,
+  currentCurr: state.currencyList.currentCurrency,
 });
 
 const mapDispatchToProps = (dispatch) => ({
