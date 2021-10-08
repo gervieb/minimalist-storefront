@@ -1,17 +1,27 @@
 import React, { Component } from "react";
 import MiniCart from "./MiniCart";
 import blackCart from "../assets/black-cart.png";
+import menu from "../assets/menu-nav.png";
 import shoppingBag from "../assets/shopping-bag.png";
-import { changeCurrency } from "../redux/actions/currencyAction";
-import { displayCart } from "../redux/actions/displayAction";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
-import CurrencyModal from "../components/Currency";
-import Categories from "../components/Categories";
+import CurrencyModal from "../components/Currencies";
+import NavMenu from "../components/NavMenu";
+import getSymbolFromCurrency from "currency-symbol-map";
+import SidePanel from "../components/Sidepanel";
+import { queryCategories, endpoint } from "../utils/query";
+import { request } from "graphql-request";
+import {
+  displayCart,
+  displayCurrency,
+  displaySidepanel,
+} from "../redux/actions/displayAction";
 import {
   NavbarContainer,
   ShoppingBagIcon,
   Overlay,
+  LeftNav,
+  LeftNavLink,
   RightNav,
   MainCurrency,
   ArrowDown,
@@ -22,22 +32,34 @@ import {
 
 class Navbar extends Component {
   state = {
-    currencyDisplay: false,
+    categories: [],
+  };
+
+  componentDidMount = () => {
+    this.queryCategories();
+  };
+
+  queryCategories = async () => {
+    const data = await request(endpoint, queryCategories);
+    this.setState({ categories: data.categories });
   };
 
   handleChangeDisplay = (bool) => {
-    this.setState({ currencyDisplay: bool });
+    this.props.setDisplayCurr(bool);
   };
 
   render() {
     const {
-      currencies,
       currentCurr,
-      display,
+      setDisplayCart,
       cartList,
-      categories,
-      isDisplayed,
-      saveNewCurrency,
+      isCartDisplayed,
+      isCurrDisplayed,
+      history,
+      box,
+      setDisplayCurr,
+      isSidepanelDisplayed,
+      setDisplaySidepanel,
     } = this.props;
 
     const cartLength = cartList.map((list) =>
@@ -45,33 +67,47 @@ class Navbar extends Component {
     );
 
     const totalLength = cartLength.flat().reduce((acc, sum) => acc + sum, 0);
+    const categories = this.state.categories;
 
     return (
       <NavbarContainer>
-        <Categories categories={categories} />
-        <div>
-          <ShoppingBagIcon src={shoppingBag} alt="shopping bag icon" />
-        </div>
+        <LeftNav>
+          <LeftNavLink>
+            <NavMenu categories={categories} />
+          </LeftNavLink>
+          <img
+            src={menu}
+            alt="menu icon"
+            className="menu-icon"
+            onClick={() => setDisplaySidepanel(true)}
+          />
+        </LeftNav>
+        <SidePanel
+          setDisplaySidepanel={setDisplaySidepanel}
+          isSidepanelDisplayed={isSidepanelDisplayed}
+          categories={categories}
+        />
+        <ShoppingBagIcon
+          src={shoppingBag}
+          alt="shopping bag icon"
+          onClick={() => history.push("/")}
+        />
         <RightNav>
           <MainCurrency
-            onClick={() =>
-              this.setState({
-                currencyDisplay: !this.state.currencyDisplay,
-              })
-            }
+            ref={box}
+            onClick={() => setDisplayCurr(!isCurrDisplayed)}
           >
-            {currentCurr}
-            {this.state.currencyDisplay ? <ArrowUp /> : <ArrowDown />}
+            {getSymbolFromCurrency(currentCurr)}
+            {isCurrDisplayed ? <ArrowUp /> : <ArrowDown />}
           </MainCurrency>
           <CurrencyModal
-            currencies={currencies}
-            saveNewCurrency={saveNewCurrency}
+            getSymbolFromCurrency={getSymbolFromCurrency}
             onChangeDisplay={this.handleChangeDisplay}
-            currencyDisplay={this.state.currencyDisplay}
+            isCurrDisplayed={isCurrDisplayed}
           />
           <CartIconWrapper
-            onMouseEnter={() => display(true)}
-            onMouseLeave={() => display(false)}
+            onMouseEnter={() => !isCurrDisplayed && setDisplayCart(true)}
+            onMouseLeave={() => setDisplayCart(false)}
           >
             <img src={blackCart} alt="cart icon" />
             {totalLength > 0 && (
@@ -83,23 +119,27 @@ class Navbar extends Component {
             <MiniCart cartLength={totalLength} />
           </CartIconWrapper>
         </RightNav>
-        <Overlay isDisplayed={isDisplayed} cartLength={totalLength}></Overlay>
+        <Overlay
+          isCartDisplayed={isCartDisplayed}
+          cartLength={totalLength}
+        ></Overlay>
       </NavbarContainer>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-  categories: state.dataList.data.categories,
-  currencies: state.dataList.data.currencies,
-  currentCurr: state.currencyList.currency,
+  currentCurr: state.currencyList.currentCurrency,
   cartList: state.cart.cartList,
-  isDisplayed: state.displayCart.isDisplayed,
+  isCartDisplayed: state.displayCart.isCartDisplayed,
+  isCurrDisplayed: state.displayCart.isCurrDisplayed,
+  isSidepanelDisplayed: state.displayCart.isSidepanelDisplayed,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  saveNewCurrency: (curr) => dispatch(changeCurrency(curr)),
-  display: (bool) => dispatch(displayCart(bool)),
+  setDisplayCart: (bool) => dispatch(displayCart(bool)),
+  setDisplayCurr: (bool) => dispatch(displayCurrency(bool)),
+  setDisplaySidepanel: (bool) => dispatch(displaySidepanel(bool)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Navbar));
