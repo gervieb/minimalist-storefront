@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import { displayCart } from "../redux/actions/displayAction";
 import { increaseQty, decreaseQty } from "../redux/actions/cartAction";
+import getSymbolFromCurrency from "currency-symbol-map";
 import {
   CartOverlayContainer,
   Header,
@@ -15,7 +16,7 @@ import {
 class MiniCart extends Component {
   render() {
     const {
-      isDisplayed,
+      isCartDisplayed,
       cartList,
       cartLength,
       history,
@@ -38,7 +39,10 @@ class MiniCart extends Component {
     ).toFixed(2);
 
     return (
-      <CartOverlayContainer isDisplayed={isDisplayed} cartLength={cartLength}>
+      <CartOverlayContainer
+        isCartDisplayed={isCartDisplayed}
+        cartLength={cartLength}
+      >
         <Header>
           My Bag,{" "}
           <span>
@@ -54,12 +58,14 @@ class MiniCart extends Component {
                 increase={increase}
                 decrease={decrease}
                 currentCurr={currentCurr}
+                getSymbolFromCurrency={getSymbolFromCurrency}
               />
             ))}
             <TotalWrapper>
               <p>Total</p>
               <p className="total-amount">
-                {currentCurr} {totalAmount}
+                {getSymbolFromCurrency(currentCurr)}
+                {totalAmount}
               </p>
             </TotalWrapper>
             <ButtonWrapper>
@@ -82,9 +88,9 @@ class MiniCart extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  isDisplayed: state.displayCart.isDisplayed,
+  isCartDisplayed: state.displayCart.isCartDisplayed,
   cartList: state.cart.cartList,
-  currentCurr: state.currencyList.currency,
+  currentCurr: state.currencyList.currentCurrency,
 });
 
 const mapDispatchToProps = (dispatch) => ({
