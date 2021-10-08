@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import CartAttributes from "./CartAttributes";
 import { currencyConverter } from "../utils/productUtils";
+import getSymbolFromCurrency from "currency-symbol-map";
 import {
   CartItemWrapper,
   CartProductLeft,
   AttributesWrapper,
+  CartAtrributesWrapper,
   Options,
   CartProductRight,
   Title,
@@ -14,6 +16,7 @@ import {
   ImageGallery,
   NextButton,
   PreviousButton,
+  Label,
 } from "./CartItems.style";
 
 class CartItems extends Component {
@@ -38,22 +41,21 @@ class CartItems extends Component {
       this.props;
 
     return (
-      item.qty > 0 && (
-        <CartItemWrapper>
-          <CartProductLeft>
-            <Title>
-              <p className="brand">{item.product.brand}</p>
-              <p>{item.product.name}</p>
-            </Title>
-            <h4 className="item-amount">
-              {currentCurr}{" "}
-              {Number(
-                currencyConverter(item.product.prices, currentCurr) * item.qty
-              ).toFixed(2)}
-            </h4>
-            <AttributesWrapper>
-              {item.product.attributes.map((attri) => (
-                <Options key={attri.id}>
+      <CartItemWrapper>
+        <CartProductLeft>
+          <Title>
+            <p className="brand">{item.product.brand}</p>
+            <p>{item.product.name}</p>
+          </Title>
+          <h4 className="item-amount">
+            {getSymbolFromCurrency(currentCurr)}
+            {currencyConverter(item.product.prices, currentCurr)}
+          </h4>
+          <AttributesWrapper>
+            {item.product.attributes.map((attri) => (
+              <Options key={attri.id}>
+                <Label>{attri.name}</Label>
+                <CartAtrributesWrapper>
                   {attri.items.map((el) => (
                     <CartAttributes
                       key={el.id}
@@ -63,43 +65,39 @@ class CartItems extends Component {
                       changeOption={changeOption}
                     />
                   ))}
-                </Options>
-              ))}
-            </AttributesWrapper>
-          </CartProductLeft>
-          <CartProductRight>
-            <QuantityWrapper>
-              <Sign onClick={() => increase(item.varId, list.productId)}>
-                +
-              </Sign>
-              <span className="item-quantity">{item.qty}</span>
-              <Sign onClick={() => decrease(item.varId, list.productId)}>
-                -
-              </Sign>
-            </QuantityWrapper>
-            <ImageGallery>
-              {item.product.gallery.length > 1 && (
-                <PreviousButton
-                  onClick={() => this.prevImage(item.product.gallery.length)}
-                >
-                  &lt;
-                </PreviousButton>
-              )}
-              <Image
-                src={item.product.gallery[this.state.currentIndex]}
-                alt="image gallery"
-              />
-              {item.product.gallery.length > 1 && (
-                <NextButton
-                  onClick={() => this.nextImage(item.product.gallery.length)}
-                >
-                  &gt;
-                </NextButton>
-              )}
-            </ImageGallery>
-          </CartProductRight>
-        </CartItemWrapper>
-      )
+                </CartAtrributesWrapper>
+              </Options>
+            ))}
+          </AttributesWrapper>
+        </CartProductLeft>
+        <CartProductRight>
+          <QuantityWrapper>
+            <Sign onClick={() => increase(item.varId, list.productId)}>+</Sign>
+            <span className="item-quantity">{item.qty}</span>
+            <Sign onClick={() => decrease(item.varId, list.productId)}>-</Sign>
+          </QuantityWrapper>
+          <ImageGallery>
+            {item.product.gallery.length > 1 && (
+              <PreviousButton
+                onClick={() => this.prevImage(item.product.gallery.length)}
+              >
+                &lt;
+              </PreviousButton>
+            )}
+            <Image
+              src={item.product.gallery[this.state.currentIndex]}
+              alt="image gallery"
+            />
+            {item.product.gallery.length > 1 && (
+              <NextButton
+                onClick={() => this.nextImage(item.product.gallery.length)}
+              >
+                &gt;
+              </NextButton>
+            )}
+          </ImageGallery>
+        </CartProductRight>
+      </CartItemWrapper>
     );
   }
 }
