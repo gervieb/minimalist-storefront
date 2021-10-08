@@ -1,33 +1,28 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Product from "./containers/Product";
+import AllCategories from "./containers/AllCategories";
 import Cart from "./containers/Cart";
 import Navbar from "./containers/Navbar";
 import ProductList from "./containers/ProductList";
-import { request } from "graphql-request";
-import { queryData, endpoint } from "./utils/query";
 import { connect } from "react-redux";
-import {
-  fetchDataPending,
-  fetchDataSuccess,
-  fetchDataError,
-} from "./redux/actions/dataAction";
+import { displayCurrency } from "./redux/actions/displayAction";
 import "./App.css";
 
 class App extends Component {
-  componentDidMount = () => {
-    this.fetchData();
-  };
+  constructor() {
+    super();
 
-  fetchData = async () => {
-    const { fetchPending, fetchSuccess, fetchError } = this.props;
+    this.box = React.createRef();
+  }
 
-    fetchPending();
-    try {
-      const data = await request(endpoint, queryData);
-      fetchSuccess(data);
-    } catch (error) {
-      fetchError(error);
+  componentDidMount() {
+    document.addEventListener("click", this.handleOutsideClick);
+  }
+
+  handleOutsideClick = (e) => {
+    if (this.box && !this.box.current.contains(e.target)) {
+      this.props.setDisplayCurr(false);
     }
   };
 
@@ -35,8 +30,9 @@ class App extends Component {
     return (
       <div className="App">
         <Router>
-          <Navbar />
+          <Navbar box={this.box} />
           <Switch>
+            <Route path="/" exact component={AllCategories} />
             <Route path="/cartpage" exact component={Cart} />
             <Route path="/:categoryName" exact component={ProductList} />
             <Route path="/:categoryName/:prodId" exact component={Product} />
@@ -48,9 +44,7 @@ class App extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchPending: () => dispatch(fetchDataPending()),
-  fetchSuccess: (data) => dispatch(fetchDataSuccess(data)),
-  fetchError: (error) => dispatch(fetchDataError(error)),
+  setDisplayCurr: (bool) => dispatch(displayCurrency(bool)),
 });
 
 export default connect(null, mapDispatchToProps)(App);

@@ -9,6 +9,7 @@ import {
 class CartAttributes extends Component {
   render() {
     const { el, item, changeOption, attri } = this.props;
+
     return (
       <CartAttributesWrapper>
         {attri.type !== "swatch" ? (
