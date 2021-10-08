@@ -1,7 +1,13 @@
-import { DISPLAY_CART } from "../actions/displayAction";
+import {
+  DISPLAY_CART,
+  DISPLAY_CURRENCY,
+  DISPLAY_SIDEPANEL,
+} from "../actions/displayAction";
 
 const initialState = {
-  isDisplayed: false,
+  isCartDisplayed: false,
+  isCurrDisplayed: false,
+  isSidepanelDisplayed: false,
 };
 
 const displayReducer = (state = initialState, action) => {
@@ -9,7 +15,21 @@ const displayReducer = (state = initialState, action) => {
     case DISPLAY_CART: {
       return {
         ...state,
-        isDisplayed: action.payload,
+        isCartDisplayed: action.payload,
+      };
+    }
+
+    case DISPLAY_CURRENCY: {
+      return {
+        ...state,
+        isCurrDisplayed: action.payload,
+      };
+    }
+
+    case DISPLAY_SIDEPANEL: {
+      return {
+        ...state,
+        isSidepanelDisplayed: action.payload,
       };
     }
 
