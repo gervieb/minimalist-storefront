@@ -17,13 +17,19 @@ export const handleDecrease = (cartItems, id, prodId) => {
     .find((list) => list.productId === prodId)
     .items.find((item) => item.varId === id).qty;
 
-  if (quantity === 1)
+  if (quantity === 1) {
+    const res = cartItems.find((list) => list.productId === prodId);
+
+    if (res.items.length === 1)
+      return cartItems.filter((list) => list.productId !== prodId);
+
     return cartItems.map((list) => {
       return {
         ...list,
         items: list.items.filter((item) => item.varId !== id),
       };
     });
+  }
 
   return cartItems.map((list) => {
     return {
